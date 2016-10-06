@@ -17,9 +17,13 @@ router.get('/create', (req,res) => {
 		.create({})
 		.then( game => {
 			console.log('game', game)
-			res.render('game')
+			res.redirect(`/game/${game._id}`)
 		})
 		.catch(console.error)
+})
+
+router.get('/game/:id', (req,res) => {
+	res.render('game')
 })
 
 module.exports = router

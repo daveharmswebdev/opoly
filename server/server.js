@@ -27,3 +27,12 @@ mongoose.connect(MONGODB_URL, () => {
 		console.log(`now listening on ${PORT}`)
 	})
 })
+
+io.on('connect', socket => {
+	const id = socket.handshake.headers.referer.split('/').slice(-1)[0]
+
+	socket.on('diceRollResult', result => {
+		console.log('result', result)
+		io.emit('reportDiceRollResult',result)
+	})
+})
