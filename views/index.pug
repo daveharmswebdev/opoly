@@ -10,5 +10,6 @@ html
 			a(href='/create') Create
 		h2 Pick a game sonny!
 		.join
-			for game in [1,2,3]
-				a(href='/game/${}') #{game}
+			ul
+				for game in games
+					li: a(href='/game/${game._id}') #{game._id}

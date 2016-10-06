@@ -6,7 +6,10 @@ const router = Router()
 const Game = require('../models/game')
 
 router.get('/', (req,res) => {
-	res.render('index')
+	Game
+		.find()
+		.then( games => res.render('index', {games}))
+		.catch(console.error)
 })
 
 router.get('/create', (req,res) => {
