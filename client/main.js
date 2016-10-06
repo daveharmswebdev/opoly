@@ -16,3 +16,4 @@ roll.addEventListener('click', () => {
 })
 
 socket.on('reportDiceRollResult', report => console.log('report', report))
+socket.on('player joined', msg => console.log('msg', msg))
