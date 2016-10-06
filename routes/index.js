@@ -14,10 +14,8 @@ router.get('/', (req,res) => {
 		.catch(console.error)
 })
 
-router.get('/create', gameCtrl.join)
+router.get('/create', gameCtrl.create)
 
-router.get('/game/:id', (req,res) => {
-	res.render('game')
-})
+router.get('/game/:id', gameCtrl.join)
 
 module.exports = router
