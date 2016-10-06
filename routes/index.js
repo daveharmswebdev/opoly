@@ -2,8 +2,10 @@
 
 const { Router } = require('express')
 const router = Router()
-
 const Game = require('../models/game')
+
+// controllers
+const gameCtrl = require('../controllers/game')
 
 router.get('/', (req,res) => {
 	Game
@@ -12,15 +14,7 @@ router.get('/', (req,res) => {
 		.catch(console.error)
 })
 
-router.get('/create', (req,res) => {
-	Game
-		.create({})
-		.then( game => {
-			console.log('game', game)
-			res.redirect(`/game/${game._id}`)
-		})
-		.catch(console.error)
-})
+router.get('/create', gameCtrl.join)
 
 router.get('/game/:id', (req,res) => {
 	res.render('game')
