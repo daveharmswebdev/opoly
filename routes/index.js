@@ -2,13 +2,15 @@
 
 const { Router } = require('express')
 const router = Router()
-const Game = require('../models/game')
+
 
 // routes
 const register = require('./register')
 const login = require('./login')
 const create = require('./create')
 const game = require('./game')
+const home = require('./home')
+const logout = require('./logout')
 
 // pulbic routes
 router.use(register)
@@ -23,14 +25,9 @@ router.use((req, res, next) => {
 	}
 })
 
-router.get('/', (req,res) => {
-	Game
-		.find()
-		.then( games => res.render('index', {games}))
-		.catch(console.error)
-})
-
 // private routes
+router.use(logout)
+router.use(home)
 router.use(game)
 router.use(create)
 
