@@ -3,11 +3,25 @@
 const { Router } = require('express')
 const router = Router()
 const Game = require('../models/game')
-const passport = require('passport')
 
-// controllers
-const gameCtrl = require('../controllers/game')
-const registerCtrl = require('../controllers/register')
+// routes
+const register = require('./register')
+const login = require('./login')
+const create = require('./create')
+const game = require('./game')
+
+// pulbic routes
+router.use(register)
+router.use(login)
+
+// route guard
+router.use((req, res, next) => {
+	if (req.user) {
+		next()
+	} else {
+		res.redirect('/login')
+	}
+})
 
 router.get('/', (req,res) => {
 	Game
@@ -16,17 +30,8 @@ router.get('/', (req,res) => {
 		.catch(console.error)
 })
 
-router.get('/register', registerCtrl.new)
-
-router.post('/register', registerCtrl.create)
-
-router.get('/login', (req, res) => res.render('login'))
-
-router.post('/login', passport.authenticate('local', { successRedirect: '/',
-                                                       failureRedirect: '/login' }))
-
-router.get('/create', gameCtrl.create)
-
-router.get('/game/:id', gameCtrl.join)
+// private routes
+router.use(game)
+router.use(create)
 
 module.exports = router
