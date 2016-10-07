@@ -3,6 +3,7 @@
 const { Router } = require('express')
 const router = Router()
 const Game = require('../models/game')
+const passport = require('passport')
 
 // controllers
 const gameCtrl = require('../controllers/game')
@@ -20,6 +21,9 @@ router.get('/register', registerCtrl.new)
 router.post('/register', registerCtrl.create)
 
 router.get('/login', (req, res) => res.render('login'))
+
+router.post('/login', passport.authenticate('local', { successRedirect: '/',
+                                                       failureRedirect: '/login' }))
 
 router.get('/create', gameCtrl.create)
 
