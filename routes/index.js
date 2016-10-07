@@ -19,6 +19,8 @@ router.get('/register', registerCtrl.new)
 
 router.post('/register', registerCtrl.create)
 
+router.get('/login', (req, res) => res.render('login'))
+
 router.get('/create', gameCtrl.create)
 
 router.get('/game/:id', gameCtrl.join)

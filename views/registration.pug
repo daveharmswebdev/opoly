@@ -2,7 +2,8 @@ extends partials/layout.pug
 
 block content
 	h2 Register
-
+	if message
+		h3 #{message}
 	.login
 		form(method="POST")
 			.form-group
