@@ -1,10 +1,10 @@
 'use strict'
 
 const mongoose = require('mongoose')
-const {app, server, io} = require('./socketFactory')
+const {app, server} = require('./socketFactory')
 const express = require('express')
-const Game = require('../models/game')
 const bodyParser = require('body-parser')
+
 
 // for login
 const passport = require('passport')
@@ -52,21 +52,4 @@ mongoose.connect(MONGODB_URL, () => {
 	})
 })
 
-io.on('connect', socket => {
-	const id = socket.handshake.headers.referer.split('/').slice(-1)[0]
-
-	Game
-		.findById(id)
-		.then( g => {
-			socket.join(g._id)
-			socket.gameId = g._id
-			io.to(g._id).emit('player joined', g)
-		})
-
-	socket.on('diceRollResult', result => {
-		console.log('result', result)
-		io.emit('reportDiceRollResult',result)
-	})
-
-
-})
+require('./io.js').init()
