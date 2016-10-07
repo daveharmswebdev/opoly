@@ -63,9 +63,9 @@ io.on('connect', socket => {
 			io.to(g._id).emit('player joined', g)
 		})
 
-	socket.on('diceRollResult', result => {
-		console.log('result', result)
-		io.emit('reportDiceRollResult',result)
+	socket.on('diceRollResult', ({roll, roomId}) => {
+		console.log('roll', roll)
+		io.to(roomId).emit('reportDiceRollResult', roll)
 	})
 
 
