@@ -1,0 +1,22 @@
+{
+  "name": "opoly",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Dave Harms <daveharmswebdev@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/daveharmswebdev/opoly",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

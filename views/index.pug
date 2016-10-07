@@ -1,15 +1,12 @@
-doctype
-html
-	head
-		title Mockopoly
-		link(rel='stylesheet', href='/css/style.css')
-	body
-		h1 Mockopoly
+extends partials/layout.pug
 
-		.create
-			a(href='/create') Create
-		h2 Pick a game sonny!
-		.join
-			ul
-				for game in games
-					li: a(href=`/game/${game._id}`) #{game._id}
+block content
+	h1 Mockopoly
+
+	.create
+		a(href='/create') Create
+	h2 Pick a game sonny!
+	.join
+		ul
+			for game in games
+				li: a(href=`/game/${game._id}`) #{game._id}

@@ -1,0 +1,19 @@
+extends partials/layout.pug
+
+block content
+	h2 Register
+	if message
+		h3 #{message}
+	.login
+		form(method="POST")
+			.form-group
+				label(for='email') Email
+				input#email(type='text', name='email', plaeholder='i.e. you@email.com', required)
+			.form-group
+				label(for='password') Password
+				input#password(type='password', name='password', placeholder='****************', required)
+			.form-group
+				label(for='confirmation') Confirm Password
+				input#confirmation(type='password', name='confirmation', placeholder='****************', required)
+			button.btn.btn-primary(type='submit') Register
+			button.btn.btn-danger(href='') Cancel
