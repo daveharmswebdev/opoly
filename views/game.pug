@@ -1,12 +1,7 @@
-doctype
-html
-	head
-		title Mockopoly
-		link(rel='stylesheet', href='/css/style.css')
-	body
-		h1 Mockopoly
+extends partials/layout.pug
 
-		#rollDisplay
-		button#roll Roll
-		script(src='/socket.io/socket.io.js')
-		script(src='/main.js')
+block content
+	#rollDisplay
+	button#roll Roll
+	script(src='/socket.io/socket.io.js')
+	script(src='/main.js')

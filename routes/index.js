@@ -6,6 +6,7 @@ const Game = require('../models/game')
 
 // controllers
 const gameCtrl = require('../controllers/game')
+const registerCtrl = require('../controllers/register')
 
 router.get('/', (req,res) => {
 	Game
@@ -13,6 +14,10 @@ router.get('/', (req,res) => {
 		.then( games => res.render('index', {games}))
 		.catch(console.error)
 })
+
+router.get('/register', registerCtrl.new)
+
+router.post('/register', registerCtrl.create)
 
 router.get('/create', gameCtrl.create)
 
