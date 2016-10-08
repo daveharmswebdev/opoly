@@ -2,7 +2,7 @@
 
 const {io} = require('./socketFactory')
 const Game = require('../models/game')
-const { report } = require('./dashBoardReport')
+// const { report } = require('./dashBoardReport')
 
 module.exports.init = () => {
   io.on('connect', socket => {
@@ -23,29 +23,42 @@ module.exports.init = () => {
 
     socket.on('diceRollResult', ({roll, roomId}) => {
       const rollString = roll.toString()
+      io.to(roomId).emit('reportDiceRollResult', rollString)
       Game
         .findByIdAndUpdate(roomId, { lastRoll: rollString }, { new: true })
         .then(() => {
           Game
             .find()
-            .then( games => io.to('DASHBOARD').emit('dashBoardUpdate', games))
+            .then(sendReport())
             .catch(console.error)
         })
         .catch(console.error)
       console.log('roll', roll)
     })
 
-    socket.on('dashboardInit', () => {
-      let board = {}
+    function getReport(id, cb) {
+      Game
+        .findById(id)
+        .then( g => cb(g))
+    }
+
+    function sendReport() {
       const keys = Object.keys(socket.adapter.rooms)
-      const rooms = keys
+      let ids = keys
         .filter(key => key.slice(0,2) != '/#')
         .filter(key => key != 'DASHBOARD')
-      console.log('test', rooms)
-      rooms.forEach( room => console.log('test*****', report(room)))
-      board.rooms = rooms
-      socket.join('DASHBOARD')
-      io.to('DASHBOARD').emit('dashBoardReport', board)
+        .map( id => {
+          return new Promise((resolve) => {
+            getReport(id, resolve)
+          })
+        })
+
+      Promise.all(ids).then( ids => io.emit('dashBoardReport', ids))
+      io.emit('dashBoardReport', 'hello brother')
+    }
+
+    socket.on('dashboardInit', () => {
+      sendReport()
     })
   })  
 }
