@@ -10,3 +10,9 @@ block content
 		ul
 			for game in games
 				li: a(href=`/game/${game._id}`) #{game._id}
+
+	div
+		ul#board
+
+	script(src='/socket.io/socket.io.js')
+	script(src='/dashboard.js')

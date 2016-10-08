@@ -29,6 +29,6 @@ passport.use(new Strategy({
           return done(null, user);
         }
       })
-    });
+    })
   }
-));
+))
