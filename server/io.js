@@ -1,13 +1,13 @@
 'use strict'
 
-const {io} = require('./socketFactory')
+const {io, app} = require('./socketFactory')
 const Game = require('../models/game')
 // const { report } = require('./dashBoardReport')
 
 module.exports.init = () => {
   io.on('connect', socket => {
     const id = socket.handshake.headers.referer.split('/').slice(-1)[0]
-
+    console.log('app.locals from io.js', app.locals)
     if (id.length > 0) {
       Game
       .findById(id)
