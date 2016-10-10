@@ -11,5 +11,6 @@ module.exports = mongoose.model('Game', {
 	whoseTurn: String,
 	turnCounter: { type: Number, default: 0 },
 	finished: { type: Boolean, default: false },
-	winner: { type: String, default: 'none' }
+	winner: { type: String, default: 'none' },
+	lastRoll: String
 })
