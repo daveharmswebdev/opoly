@@ -11,7 +11,16 @@ module.exports.init = () => {
     if (id.length > 0) {
       Game
       .findById(id)
+      // .then(addPlayerTo(id))
       .then( g => {
+        if (app.locals.user && g.players.indexOf(app.locals.user) === -1) {
+          Game
+            .findByIdAndUpdate(
+              id,
+              {$push: {players:app.locals.user}},
+              {new:true})
+            .then( g => console.log('g after adding player', g))
+        }
         socket.join(g._id)
         socket.gameId = g._id
         io.to(g._id).emit('player joined', g)
@@ -35,6 +44,14 @@ module.exports.init = () => {
         .catch(console.error)
       console.log('roll', roll)
     })
+
+    function addPlayerTo(id) {
+
+      // console.log('add to player', app.locals.id)
+      // Game
+      //   .findByIdAndUpdate(id, {$push: {players:app.locals.user}}, {new:true})
+      //   .then(g => console.log('g after add to player', g))
+    }
 
     function getReport(id, cb) {
       Game
